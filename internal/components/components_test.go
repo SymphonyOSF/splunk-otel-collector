@@ -137,7 +137,7 @@ func TestDefaultComponents(t *testing.T) {
 	}
 	expectedExporters := []string{
 		"awss3",
-		"googlecloudpubsubexporter",
+		"googlecloudpubsub",
 		"debug",
 		"file",
 		"kafka",
