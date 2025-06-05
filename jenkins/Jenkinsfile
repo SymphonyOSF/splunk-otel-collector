@@ -1,0 +1,28 @@
+@Library('sym-pipeline@CICD-1772') _
+
+def tag
+
+podTemplate(
+  cloud: "kubernetes-build-sre-jenkins-agent",
+  inheritFrom: 'jnlp',
+  yaml: readTrusted('jenkins/podTemplate.yaml'),
+  yamlMergeStrategy: merge()
+) {
+  node(POD_LABEL) {
+
+    stage('Checkout') {
+      def shortGitHash = gitCheckout()
+      def branch = env.BRANCH_NAME.replaceAll(/[\.-]/, "_")
+      tag = "${branch}-${env.BUILD_NUMBER}-${shortGitHash}"
+
+      echo "dockerTag: ${tag}"
+    }
+
+    buildGolangApp {
+      buildDockerImage = true
+      dockerRepository = "us-east4-docker.pkg.dev/sym-prod-mr-tools-01/sre-docker-us-east4"
+      dockerImage = "splink-otel-collector"
+      dockerTag = tag
+    }
+  }
+}
