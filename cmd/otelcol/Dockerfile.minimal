@@ -1,4 +1,4 @@
-FROM alpine:3.17.0 AS otelcol
+FROM us-east4-docker.pkg.dev/sym-prod-mr-tools-01/base-docker-us-east4/alpine-pack:3-1 AS otelcol
 COPY bin/otelcol_linux_amd64 /otelcol
 COPY bin/migratecheckpoint_linux_amd64 /migratecheckpoint
 RUN chmod 755 /otelcol
