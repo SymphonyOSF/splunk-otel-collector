@@ -1,8 +1,8 @@
 FROM us-east4-docker.pkg.dev/sym-prod-mr-tools-01/base-docker-us-east4/alpine-pack:3-1 AS otelcol
 COPY bin/otelcol_linux_amd64 /otelcol
 COPY bin/migratecheckpoint_linux_amd64 /migratecheckpoint
-RUN sudo chmod 755 /otelcol
-RUN sudo chmod 755 /migratecheckpoint
+RUN chmod 755 /otelcol
+RUN chmod 755 /migratecheckpoint
 RUN echo "splunk-otel-collector:x:999:999::/:" > /etc_passwd
 # create base dirs since we cannot chown in scratch image except via COPY
 RUN mkdir -p /otel/collector /splunk-otel-collector /tmp/tmp
